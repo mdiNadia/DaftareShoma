@@ -22,13 +22,13 @@ namespace Infrastructure.Services
         private readonly IPerson _person;
         private readonly IMapper _mapper;
 
-        public Transaction(DataContext context, IConfiguration configuration, IPerson person,IMapper mapper) : base(context, configuration)
+        public Transaction(DataContext context, IConfiguration configuration, IPerson person, IMapper mapper) : base(context, configuration)
         {
             this._context = context;
             this._person = person;
             this._mapper = mapper;
         }
-   
+
         public async Task<int> InsertTransaction(List<TransactionDto> transaction)
         {
             try
@@ -53,7 +53,7 @@ namespace Infrastructure.Services
                 //}
 
 
-               
+
             }
             catch (Exception err)
             {
@@ -70,20 +70,29 @@ namespace Infrastructure.Services
                 var data = await GetQueryList().Include(c => c.Person).GroupBy(c => new
                 {
                     personId = c.personId,
-                    TransactionDate = c.TransactionDate.Date
+                    TransactionDate = c.TransactionDate.Date,
+
 
                 }).Select(g => new PersonDailyTransactionDto
                 {
                     personId = g.Key.personId,
                     date = g.Key.TransactionDate,
                     fullname = g.Select(f => (f.Person.name + f.Person.family)).FirstOrDefault(),
-                    price = g.Select(f => f.Price).FirstOrDefault(),
-                    total = g.Sum(f => f.Price)
-
+                    first_to = g.Select(f => f.Price).FirstOrDefault(),
+                    price = g.Sum(f => f.Price),
+                    total = 0
                 }).ToListAsync();
-
-             
-
+                //جمع تمام تراکنش های کاربر از اول تا آخر
+                var totalPrices = data.GroupBy(s => s.personId).Select(c => new
+                {
+                    PersionId = c.Key,
+                    Prices = c.Sum(s => s.price)
+                });
+                //اضافه کردن جمع تمام تراکنش های کاربر به دیتا
+                data.ForEach(d =>
+                {
+                    d.total = totalPrices.Where(c => c.PersionId == d.personId).Select(c => c.Prices).FirstOrDefault();
+                });
                 return data;
             }
             catch (Exception err)

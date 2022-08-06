@@ -8,6 +8,8 @@ namespace Application.Dtos.Transaction
 {
     public class PersonDailyTransactionDto
     {
+        public decimal first_to { get; set; }
+
         public int personId { get; set; }
 
         public string fullname { get; set; }

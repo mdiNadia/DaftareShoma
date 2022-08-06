@@ -34,4 +34,3 @@ C:\Users\nadia\Desktop\Excercise\DaftareShoma\Infrastructure\obj\Debug\net6.0\In
 C:\Users\nadia\Desktop\Excercise\DaftareShoma\Infrastructure\obj\Debug\net6.0\ref\Infrastructure.dll
 C:\Users\nadia\Desktop\Excercise\DaftareShoma\Infrastructure\obj\Debug\net6.0\Infrastructure.pdb
 C:\Users\nadia\Desktop\Excercise\DaftareShoma\Infrastructure\obj\Debug\net6.0\Infrastructure.genruntimeconfig.cache
-C:\Users\nadia\Desktop\Excercise\DaftareShoma\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.CopyComplete
